@@ -47,6 +47,7 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 		    	for x in urandom.iter() {
 				println!("Random: {}", x);
 				}
+				urandom.clear();
 			}
 	    } else {
 	        let mut stdout = stdout();
