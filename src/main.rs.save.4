@@ -1,0 +1,58 @@
+extern crate sysfs_gpio;
+extern crate time;
+
+use sysfs_gpio::{Direction, Edge, Pin};
+use std::env;
+use std::io::prelude::*;
+use std::io::stdout;
+
+fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
+    let input = Pin::new(pin);
+    let mut x:u64 = 0;
+    let mut ns:u64 = 0;
+    let mut sum:u64 = 0;
+    let mut difference:u64 = 0;
+    input.with_exported(|| {
+	let mut vecstore: Vec<u64> = vec![];
+    	input.set_direction(Direction::In)?;
+        input.set_edge(Edge::RisingEdge)?;
+        let mut poller = input.get_poller()?;
+        loop {
+	    //ns = time::precise_time_ns();
+	    if let Some(value) = poller.poll(1000)? {
+		println!("GPIO Val: {}", value);
+		ns = time::precise_time_ns();
+		println!("Nanosecond: {}", ns);
+		vecstore.push(ns);
+		if vecstore.len() == 2 {
+		   
+		    difference = sum / 2;
+		    println!("Sum: {}", sum);
+		    println!("Time Difference: {}", difference);
+		    vecstore.clear();
+		}
+	    } else {
+	        let mut stdout = stdout();
+		stdout.write_all(b".")?;
+		stdout.flush()?;
+	    }  
+	}
+    })
+}
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+    	if args.len() != 2 {
+        println!("Usage: ./interrupt <pin>");
+    } else {
+        match args[1].parse::<u64>() {
+            Ok(pin) => {
+                match interrupt(pin) {
+                    Ok(()) => println!("Interrupting Complete!"),
+                    Err(err) => println!("Error: {}", err),
+                }
+            }
+            Err(_) => println!("Usage: ./interrupt <pin>"),
+        }
+    }
+}
