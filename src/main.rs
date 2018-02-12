@@ -24,13 +24,13 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
         let mut poller = input.get_poller()?;
         loop {
 	    	if let Some(value) = poller.poll(1000)? {
-				println!("GPIO Val: {}", value);
+				//println!("GPIO Val: {}", value);
 				let now = Utc::now();
 				count += 1;
 				ns = now.nanosecond() as i64;
-				println!("Nanosecond: {}", ns);
+				//println!("Nanosecond: {}", ns);
 				vecstore.push(ns);
-				println!("Current Count: {}", count);
+				//println!("Current Count: {}", count);
 				if vecstore.len() == 3 {
 		    		x = vecstore[0];
 		    		y = vecstore[1];
@@ -45,7 +45,7 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 		    		vecstore.clear();
 			} if urandom.len() == 8 {
 		    	for x in urandom.iter() {
-				println!("Random: {}", x);
+					println!("Random: {}", x);
 				}
 				urandom.clear();
 			}
