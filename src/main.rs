@@ -16,7 +16,7 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
     let mut difference1:i64 = 0;
     let mut difference2:i64 = 0;
     let mut count:i64 = 0;
-    let mut urandom: Vec<u8> = vec![];
+    let mut urandom: Vec<i8> = vec![];
 
     input.with_exported(|| {
 	let mut vecstore: Vec<i64> = vec![];
@@ -48,10 +48,10 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 		    	for x in urandom.iter() {
 		    		print!("{}", x);
 				}
-				let mut urandomcopy = urandom.clone();
-				let test = String::from_utf8(urandomcopy);
+				//let mut urandomcopy = urandom.clone();
+				//let test = String::from_utf8(urandomcopy);
 				urandom.clear();
-				println!("{:?}", test);
+				//println!("{:?}", test);
 			}
 	    } else {
 	        let mut stdout = stdout();
