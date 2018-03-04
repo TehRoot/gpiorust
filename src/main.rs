@@ -45,7 +45,7 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 		    		vecstore.clear();
 			} if urandom.len() == 8 {
 		    	for x in urandom.iter() {
-		    		print!(x);
+		    		print!("{}", x);
 				}
 				urandom.clear();
 			}
