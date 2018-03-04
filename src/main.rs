@@ -45,7 +45,7 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 		    		vecstore.clear();
 			} if urandom.len() == 8 {
 		    	for x in urandom.iter() {
-					println!("Random: {}", x);
+		    		print!(x);
 				}
 				urandom.clear();
 			}
@@ -53,7 +53,7 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 	        let mut stdout = stdout();
 			stdout.write_all(b".")?;
 			stdout.flush()?;
-	    }  
+	    }
 	}
     })
 }
