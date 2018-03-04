@@ -17,6 +17,7 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
     let mut difference2:i64 = 0;
     let mut count:i64 = 0;
     let mut urandom: Vec<u8> = vec![];
+
     input.with_exported(|| {
 	let mut vecstore: Vec<i64> = vec![];
     	input.set_direction(Direction::In)?;
@@ -46,8 +47,8 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 			} if urandom.len() == 8 {
 		    	for x in urandom.iter() {
 		    		print!("{}", x);
-
 				}
+				urandom.make_ascii_uppercase();
 				urandom.clear();
 			}
 	    } else {
