@@ -48,8 +48,10 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 		    	for x in urandom.iter() {
 		    		print!("{}", x);
 				}
-				urandom.make_ascii_uppercase();
+				let mut urandomcopy = urandom.clone();
+				let test = String::from_utf8(urandomcopy);
 				urandom.clear();
+				println!("{:?}", test);
 			}
 	    } else {
 	        let mut stdout = stdout();
