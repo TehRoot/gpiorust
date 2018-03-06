@@ -52,6 +52,7 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 				//let mut urandomcopy = urandom.clone();
 				//let test = String::from_utf8(urandomcopy);
 				println!("Conversion: {}", decimal);
+				decimal = 0;
 				urandom.clear();
 				//println!("{:?}", test);
 			}
