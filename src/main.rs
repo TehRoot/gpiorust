@@ -47,11 +47,13 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 			} if urandom.len() == 8 {
 		    	for x in urandom.iter() { 
 		    		decimal = decimal * 2 + x;
+		    		if decimal < 128 && decimal > 32 {
+		    			println!("Conversion: {}", decimal);
+		    		}
 		    		print!("{}", x);
 				}
 				//let mut urandomcopy = urandom.clone();
 				//let test = String::from_utf8(urandomcopy);
-				println!("Conversion: {}", decimal);
 				decimal = 0;
 				urandom.clear();
 				//println!("{:?}", test);
