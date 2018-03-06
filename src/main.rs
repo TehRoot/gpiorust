@@ -48,10 +48,10 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 		    	for x in urandom.iter() { 
 		    		decimal = decimal * 2 + x;
 		    		print!("{}", x);
-		    		println!("Conversion: {}", decimal);
 				}
 				//let mut urandomcopy = urandom.clone();
 				//let test = String::from_utf8(urandomcopy);
+				println!("Conversion: {}", decimal);
 				urandom.clear();
 				//println!("{:?}", test);
 			}
