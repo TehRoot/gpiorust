@@ -16,8 +16,8 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
     let mut difference1:i64 = 0;
     let mut difference2:i64 = 0;
     let mut count:i64 = 0;
-    let mut urandom: Vec<i8> = vec![];
-
+    let mut urandom: Vec<i64> = vec![];
+    let mut decimal:i64 = 0;
     input.with_exported(|| {
 	let mut vecstore: Vec<i64> = vec![];
     	input.set_direction(Direction::In)?;
@@ -45,8 +45,10 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 		    		}
 		    		vecstore.clear();
 			} if urandom.len() == 8 {
-		    	for x in urandom.iter() {
+		    	for x in urandom.iter() { 
+		    		decimal = decimal * 2 + x;
 		    		print!("{}", x);
+		    		println!("Conversion: {}", decimal);
 				}
 				//let mut urandomcopy = urandom.clone();
 				//let test = String::from_utf8(urandomcopy);
