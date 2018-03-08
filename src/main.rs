@@ -16,8 +16,8 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
     let mut difference1:i64 = 0;
     let mut difference2:i64 = 0;
     let mut count:i64 = 0;
-    let mut urandom: Vec<i64> = vec![];
-    let mut decimal:i64 = 0;
+    let mut urandom: Vec<u8> = vec![];
+    let mut decimal:u8 = 0;
     input.with_exported(|| {
 	let mut vecstore: Vec<i64> = vec![];
     	input.set_direction(Direction::In)?;
@@ -25,11 +25,9 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
         let mut poller = input.get_poller()?;
         loop {
 	    	if let Some(value) = poller.poll(1000)? {
-				//println!("GPIO Val: {}", value);
 				let now = Utc::now();
 				count += 1;
 				ns = now.nanosecond() as i64;
-				//println!("Nanosecond: {}", ns);
 				vecstore.push(ns);
 				println!("Current Count: {}", count);
 				if vecstore.len() == 3 {
@@ -48,15 +46,16 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 		    	for x in urandom.iter() { 
 		    		decimal = decimal * 2 + x;
 		    		if decimal < 128 && decimal > 32 {
-		    			println!("Conversion: {}", decimal);
+		    			println!("Conversion: {}", decimal as char);
 		    		}
 		    		print!("{}", x);
 				}
+				//this is the part that im a dumb fucking idiot
+				//this is my idiot reminder every time i look at it
 				//let mut urandomcopy = urandom.clone();
 				//let test = String::from_utf8(urandomcopy);
 				decimal = 0;
 				urandom.clear();
-				//println!("{:?}", test);
 			}
 	    } else {
 	        let mut stdout = stdout();
