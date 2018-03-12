@@ -10,6 +10,7 @@ use chrono::prelude::*;
 fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
     let input = Pin::new(pin);
     let mut ns:i64 = 0;
+    let mut w:i64 = 0;
     let mut x:i64 = 0;
     let mut y:i64 = 0;
     let mut z:i64 = 0;
@@ -30,11 +31,12 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 				ns = now.nanosecond() as i64;
 				vecstore.push(ns);
 				//println!("Current Count: {}", count);
-				if vecstore.len() == 3 {
-		    		x = vecstore[0];
-		    		y = vecstore[1];
-		    		z = vecstore[2];
-		    		difference1 = y - x;
+				if vecstore.len() == 4 {
+		    		w = vecstore[0];
+		    		x = vecstore[1];
+		    		y = vecstore[2];
+		    		z = vecstore[3];
+		    		difference1 = x - w;
 		    		difference2 = z - y;
 		    		if difference1 < difference2 {
 		    			urandom.push(0);
