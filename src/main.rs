@@ -29,7 +29,7 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 				count += 1;
 				ns = now.nanosecond() as i64;
 				vecstore.push(ns);
-				println!("Current Count: {}", count);
+				//println!("Current Count: {}", count);
 				if vecstore.len() == 3 {
 		    		x = vecstore[0];
 		    		y = vecstore[1];
