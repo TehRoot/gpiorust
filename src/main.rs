@@ -2,8 +2,8 @@ extern crate sysfs_gpio;
 extern crate chrono;
 
 use sysfs_gpio::{Direction, Edge, Pin};
+use std::io::{self, Write};
 use std::env;
-use std::io::prelude::*;
 use std::io::stdout;
 use chrono::prelude::*;
 
@@ -44,7 +44,8 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 		    		vecstore.clear();
 			} if urandom.len() == 8 {
 		    	for x in urandom.iter() {
-		    		println!("{}", x); 
+		    		print!("{}", x); 
+		    		io::stdout().flush().unwrap();
 		    		decimal = decimal * 2 + x;
 		    		if decimal < 128 && decimal > 32 {
 		    			//println!("Conversion: {}", decimal as char);
