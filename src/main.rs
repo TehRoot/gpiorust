@@ -43,17 +43,13 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 		    		}
 		    		vecstore.clear();
 			} if urandom.len() == 8 {
-		    	for x in urandom.iter() { 
+		    	for x in urandom.iter() {
+		    		print!("{}", x); 
 		    		decimal = decimal * 2 + x;
 		    		if decimal < 128 && decimal > 32 {
-		    			println!("Conversion: {}", decimal as char);
+		    			//println!("Conversion: {}", decimal as char);
 		    		}
-		    		print!("{}", x);
 				}
-				//this is the part that im a dumb fucking idiot
-				//this is my idiot reminder every time i look at it
-				//let mut urandomcopy = urandom.clone();
-				//let test = String::from_utf8(urandomcopy);
 				decimal = 0;
 				urandom.clear();
 			}
