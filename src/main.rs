@@ -68,8 +68,8 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 
 fn swap_bits(time1: i64, time2: i64, time3: i64, time4: i64) -> u8 {
 	let mut flipper = false;
-	let difference1:i64;
-	let difference2:i64;
+	let mut difference1:i64;
+	let mut difference2:i64;
 	difference1 = time2 - time1;
 	difference2 = time4 - time3;
 	if difference1 != difference2 {
