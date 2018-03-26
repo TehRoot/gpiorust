@@ -14,8 +14,8 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
     let mut x:i64 = 0;
     let mut y:i64 = 0;
     let mut z:i64 = 0;
-    let mut difference1:i64 = 0;
-    let mut difference2:i64 = 0;
+    //let mut difference1:i64 = 0;
+    //let mut difference2:i64 = 0;
     let mut count:i64 = 0;
     let mut urandom: Vec<u8> = vec![];
     let mut decimal:u8 = 0;
@@ -36,13 +36,14 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 		    		x = vecstore[1];
 		    		y = vecstore[2];
 		    		z = vecstore[3];
-		    		difference1 = x - w;
-		    		difference2 = z - y;
-		    		if difference1 < difference2 {
-		    			urandom.push(0);
-		    		} else if difference2 < difference1 {
-		    			urandom.push(1);
-		    		}
+		    		//difference1 = x - w;
+		    		//difference2 = z - y;
+		    		//if difference1 < difference2 {
+		    		//	urandom.push(0);
+		    		//} else if difference2 < difference1 {
+		    		//	urandom.push(1);
+		    		//}
+		    		urandom.push(swap_bits(w, x, y, z));
 		    		vecstore.clear();
 			} if urandom.len() == 8 {
 		    	for x in urandom.iter() {
@@ -63,6 +64,21 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 	    }
 	}
     })
+}
+
+fn swap_bits(time1: i64, time2: i64, time3: i64, time4: i64) -> u8 {
+	let mut flipper = true;
+	let difference1:i64;
+	let difference2:i64;
+	difference1 = time2 - time1;
+	difference2 = time4 - time3;
+	if difference1 != difference2 {
+		flipper ^= true;
+		flipper ^ (difference1 > difference2);
+		return flipper as u8;
+	} else {
+		return 0;
+	}
 }
 
 fn main() {
