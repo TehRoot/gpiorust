@@ -72,6 +72,7 @@ fn swap_bits(time1: i64, time2: i64, time3: i64, time4: i64) -> u8 {
 	let mut difference2:i64;
 	difference1 = time2 - time1;
 	difference2 = time4 - time3;
+	println!("{} {}", difference1, difference2);
 	if difference1 != difference2 {
 		flipper ^= true;
 		flipper ^ (difference1 > difference2);
