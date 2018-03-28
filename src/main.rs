@@ -38,7 +38,7 @@ fn interrupt(pin: u64) -> sysfs_gpio::Result<()> {
 		    		vecstore.clear();
 			} if urandom.len() == 8 {
 		    	for x in urandom.iter() {
-		    		//print!("{}", x); 
+		    		print!("{}", x); 
 		    		io::stdout().flush().unwrap();
 		    		decimal = decimal * 2 + x;
 		    		if decimal < 128 && decimal > 32 {
@@ -63,12 +63,9 @@ fn swap_bits(time1: i64, time2: i64, time3: i64, time4: i64) -> u8 {
 	let difference2:i64;
 	difference1 = time2 - time1;
 	difference2 = time4 - time3;
-	//println!("{} {}", difference1, difference2);
 	if difference1 != difference2 {
 		flipper ^= true;
-		//println!("{}", flipper ^ (difference1 > difference2));
 		flipper ^= difference1 > difference2;
-		println!("{}", flipper as u8);
 		return flipper as u8;
 	} else {
 		return 0;
