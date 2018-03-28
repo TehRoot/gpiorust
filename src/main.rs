@@ -66,7 +66,7 @@ fn swap_bits(time1: i64, time2: i64, time3: i64, time4: i64) -> u8 {
 	//println!("{} {}", difference1, difference2);
 	if difference1 != difference2 {
 		flipper = flipper ^ 1;
-		println!("{}", flipper);
+		println!("{}", difference1 > difference2);
 		flipper = flipper ^ (difference1 > difference2) as i8;
 		//println!("{}", flipper);
 		return flipper as u8;
